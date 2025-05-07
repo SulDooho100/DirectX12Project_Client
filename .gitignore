@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+# Folder
+DirectX12Project_Client/.vs/*
+DirectX12Project_Client/DirectX12Project_Client/x64/*
+DirectX12Project_Client/x64/*
