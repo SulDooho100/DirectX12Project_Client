@@ -25,6 +25,12 @@
     <Filter Include="헤더 파일\System">
       <UniqueIdentifier>{ecf7bf2e-0802-4be7-84c0-a4549eb3944f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Core">
+      <UniqueIdentifier>{fce47c01-9539-4408-8562-61a38afa87a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Core">
+      <UniqueIdentifier>{6320a4d5-5992-46cc-81fb-d64e646ef054}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -41,6 +47,9 @@
     </ClInclude>
     <ClInclude Include="System\ThrowIfFailed.h">
       <Filter>헤더 파일\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DeviceManager.h">
+      <Filter>헤더 파일\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -62,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>소스 파일\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\DeviceManager.cpp">
+      <Filter>소스 파일\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
