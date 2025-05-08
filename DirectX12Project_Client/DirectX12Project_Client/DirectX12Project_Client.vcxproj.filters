@@ -19,6 +19,12 @@
     <Filter Include="헤더 파일\Main">
       <UniqueIdentifier>{5a04a7f7-fe45-4020-81f5-f34af489abc8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\System">
+      <UniqueIdentifier>{265460ad-4ca9-4c51-b3a8-1017a9502ff3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\System">
+      <UniqueIdentifier>{ecf7bf2e-0802-4be7-84c0-a4549eb3944f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -32,6 +38,9 @@
     </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>헤더 파일\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="System\ThrowIfFailed.h">
+      <Filter>헤더 파일\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
