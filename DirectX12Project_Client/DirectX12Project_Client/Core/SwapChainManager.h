@@ -18,8 +18,7 @@ public:
     void Initialize(HWND hwnd);
 
 private:
-    void CreateOutput();
-    void SetOutputResolution(HWND hwnd);
+    void CreateOutput(HWND hwnd);
     void ChangeExclusiveFullscreen(HWND hwnd);
     void CreateSwapChain(HWND hwnd);
 

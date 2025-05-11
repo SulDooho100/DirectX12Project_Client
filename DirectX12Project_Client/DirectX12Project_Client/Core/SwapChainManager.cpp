@@ -13,8 +13,7 @@ void SwapChainManager::Initialize(HWND hwnd)
 {
 	try
 	{
-		CreateOutput();
-		SetOutputResolution(hwnd);
+		CreateOutput(hwnd); 
 		ChangeExclusiveFullscreen(hwnd);
 		CreateSwapChain(hwnd);
 	}
@@ -24,63 +23,57 @@ void SwapChainManager::Initialize(HWND hwnd)
 	}
 }
 
-void SwapChainManager::CreateOutput()
-{ 
+void SwapChainManager::CreateOutput(HWND hwnd)
+{
 	::ZeroMemory(&output_mode_desc_, sizeof(DXGI_MODE_DESC));
-	output_mode_desc_.RefreshRate.Numerator = 30;
-	output_mode_desc_.RefreshRate.Denominator = 1;  
+	output_mode_desc_.RefreshRate.Denominator = 30;
+	output_mode_desc_.RefreshRate.Numerator = 1;
 
+	HMONITOR current_activated_monitor = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
+	  
+	MONITORINFOEX current_activated_monitor_info;
+	::ZeroMemory(&current_activated_monitor_info, sizeof(MONITORINFOEX)); 
+	current_activated_monitor_info.cbSize = sizeof(MONITORINFOEX);
+	GetMonitorInfo(current_activated_monitor, &current_activated_monitor_info);
+	 
 	Microsoft::WRL::ComPtr<IDXGIAdapter1> adapter;
 	for (unsigned int i = 0; DeviceManager::GetInstance().GetFactory()->EnumAdapters1(i, adapter.GetAddressOf()) != DXGI_ERROR_NOT_FOUND; ++i)
 	{ 
 		Microsoft::WRL::ComPtr<IDXGIOutput> output;
 		for (unsigned int j = 0; adapter->EnumOutputs(j, &output) != DXGI_ERROR_NOT_FOUND; ++j)
-		{ 
-			unsigned int mode_count = 0;
-			output->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_SCALING, &mode_count, nullptr);
+		{
+			DXGI_OUTPUT_DESC output_desc;
+			output->GetDesc(&output_desc);
+			 
+			if (wcscmp(current_activated_monitor_info.szDevice, output_desc.DeviceName) == 0)
+			{
+				unsigned int mode_count = 0;
+				output->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_SCALING, &mode_count, nullptr);
 
-			std::vector<DXGI_MODE_DESC> mode_list(mode_count);
-			output->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_SCALING, &mode_count, mode_list.data());
-
-
-			for (const DXGI_MODE_DESC& mode : mode_list)
-			{ 
-				float current_rate = static_cast<float>(mode.RefreshRate.Numerator) / static_cast<float>(mode.RefreshRate.Denominator);
-				float best_rate = static_cast<float>(output_mode_desc_.RefreshRate.Numerator) / static_cast<float>(output_mode_desc_.RefreshRate.Denominator);
-
-				if (best_rate < current_rate)
+				std::vector<DXGI_MODE_DESC> mode_list(mode_count);
+				output->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_SCALING, &mode_count, mode_list.data());
+				 
+				for (const DXGI_MODE_DESC& mode : mode_list)
 				{
-					output_mode_desc_ = mode;
-					output_ = output;
+					float current_rate = static_cast<float>(mode.RefreshRate.Numerator) / static_cast<float>(mode.RefreshRate.Denominator);
+					float best_rate = static_cast<float>(output_mode_desc_.RefreshRate.Numerator) / static_cast<float>(output_mode_desc_.RefreshRate.Denominator);
+					 
+					if (output_mode_desc_.Width * output_mode_desc_.Height < mode.Width * mode.Height && best_rate < current_rate)
+					{
+						output_mode_desc_ = mode; 
+						DEVMODE devmode;
+						::ZeroMemory(&devmode, sizeof(DEVMODE));
+						devmode.dmSize = sizeof(DEVMODE);
+						EnumDisplaySettings(current_activated_monitor_info.szDevice, ENUM_CURRENT_SETTINGS, &devmode);
+						output_mode_desc_.Width = static_cast<UINT>(devmode.dmPelsWidth);
+						output_mode_desc_.Height = static_cast<UINT>(devmode.dmPelsHeight);
+
+						output_ = output;
+					}
 				}
 			}
 		}
 	} 
-}
-
-void SwapChainManager::SetOutputResolution(HWND hwnd)
-{  
-	DXGI_OUTPUT_DESC output_desc;
-	output_->GetDesc(&output_desc);
-
-	HMONITOR monitor = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
-
-	MONITORINFOEX monitor_info;
-	::ZeroMemory(&monitor_info, sizeof(MONITORINFOEX));
-	monitor_info.cbSize = sizeof(MONITORINFOEX);
-	GetMonitorInfo(monitor, &monitor_info);
-
-	if (wcscmp(monitor_info.szDevice, output_desc.DeviceName) == 0)
-	{
-		DEVMODE devmode;
-		::ZeroMemory(&devmode, sizeof(DEVMODE));
-		devmode.dmSize = sizeof(DEVMODE); 
-		if (EnumDisplaySettings(monitor_info.szDevice, ENUM_CURRENT_SETTINGS, &devmode))
-		{
-			output_mode_desc_.Width = static_cast<UINT>(devmode.dmPelsWidth);
-			output_mode_desc_.Height = static_cast<UINT>(devmode.dmPelsHeight);
-		}
-	}
 }
  
 void SwapChainManager::ChangeExclusiveFullscreen(HWND hwnd)
