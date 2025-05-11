@@ -17,6 +17,7 @@ private:
 
 public:
     void Initialize(); 
+    ID3D12CommandQueue* GetQueue();
 
 private:
     void CreateQueue();

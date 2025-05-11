@@ -13,8 +13,7 @@ void DeviceManager::Initialize()
     {
         CreateFactory();
         CreateAdapter();
-        CreateDevice();
-
+        CreateDevice(); 
     }
     catch (std::wstring message)
     {
@@ -25,6 +24,16 @@ void DeviceManager::Initialize()
 ID3D12Device* DeviceManager::GetDevice()
 {
 	return device_.Get();
+}
+
+IDXGIFactory6* DeviceManager::GetFactory()
+{
+    return factory_.Get();
+}
+
+IDXGIAdapter4* DeviceManager::GetAdapter()
+{
+    return adapter_.Get();
 }
 
 void DeviceManager::CreateFactory()

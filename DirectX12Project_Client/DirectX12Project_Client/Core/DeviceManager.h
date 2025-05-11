@@ -17,6 +17,8 @@ private:
 public:
     void Initialize();
     ID3D12Device* GetDevice();
+    IDXGIFactory6* GetFactory();
+    IDXGIAdapter4* GetAdapter();
 
 private:
     void CreateFactory();

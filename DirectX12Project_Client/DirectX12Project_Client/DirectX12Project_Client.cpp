@@ -3,6 +3,9 @@
 
 #include "stdafx.h"
 #include "DirectX12Project_Client.h"
+#include "Core/DeviceManager.h"
+#include "Core/CommandManager.h"
+#include "Core/SwapChainManager.h"
 
 #define MAX_LOADSTRING 100
 
@@ -97,6 +100,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
+   DeviceManager::GetInstance().Initialize();
+   CommandManager::GetInstance().Initialize();
+   SwapChainManager::GetInstance().Initialize(hWnd); 
+
    return TRUE;
 }
 
@@ -166,7 +173,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     }
     return (INT_PTR)FALSE;
-}
+} 
 
 int Run()
 {

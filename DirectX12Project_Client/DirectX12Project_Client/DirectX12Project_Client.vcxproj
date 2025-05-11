@@ -131,6 +131,7 @@
   <ItemGroup>
     <ClInclude Include="Core\CommandManager.h" />
     <ClInclude Include="Core\DeviceManager.h" />
+    <ClInclude Include="Core\SwapChainManager.h" />
     <ClInclude Include="DirectX12Project_Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -140,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Core\CommandManager.cpp" />
     <ClCompile Include="Core\DeviceManager.cpp" />
+    <ClCompile Include="Core\SwapChainManager.cpp" />
     <ClCompile Include="DirectX12Project_Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
