@@ -85,7 +85,7 @@ void SwapChainManager::ChangeExclusiveFullscreen(HWND hwnd)
 	devmode.dmPelsHeight = output_mode_desc_.Height;
 	devmode.dmBitsPerPel = 32;
 	devmode.dmFields = DM_PELSWIDTH | DM_PELSHEIGHT | DM_BITSPERPEL;
-	devmode.dmDisplayFrequency = static_cast<float>(output_mode_desc_.RefreshRate.Numerator) / static_cast<float>(output_mode_desc_.RefreshRate.Denominator);
+	devmode.dmDisplayFrequency = output_mode_desc_.RefreshRate.Numerator / output_mode_desc_.RefreshRate.Denominator;
 
 	ChangeDisplaySettings(&devmode, CDS_FULLSCREEN);
 	 
