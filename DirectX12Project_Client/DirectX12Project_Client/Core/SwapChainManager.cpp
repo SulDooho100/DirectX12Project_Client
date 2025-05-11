@@ -58,7 +58,7 @@ void SwapChainManager::CreateOutput(HWND hwnd)
 					float current_rate = static_cast<float>(mode.RefreshRate.Numerator) / static_cast<float>(mode.RefreshRate.Denominator);
 					float best_rate = static_cast<float>(output_mode_desc_.RefreshRate.Numerator) / static_cast<float>(output_mode_desc_.RefreshRate.Denominator);
 					 
-					if (output_mode_desc_.Width * output_mode_desc_.Height < mode.Width * mode.Height && best_rate < current_rate)
+					if (output_mode_desc_.Width * output_mode_desc_.Height <= mode.Width * mode.Height && best_rate < current_rate)
 					{
 						output_mode_desc_ = mode; 
 						DEVMODE devmode;
