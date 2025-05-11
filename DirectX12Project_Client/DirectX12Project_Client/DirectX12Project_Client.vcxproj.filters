@@ -51,6 +51,9 @@
     <ClInclude Include="Core\DeviceManager.h">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Core\CommandManager.h">
+      <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX12Project_Client.rc">
@@ -73,6 +76,9 @@
       <Filter>소스 파일\Main</Filter>
     </ClCompile>
     <ClCompile Include="Core\DeviceManager.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\CommandManager.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
   </ItemGroup>

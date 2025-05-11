@@ -32,19 +32,19 @@ void DeviceManager::CreateFactory()
 #if defined(DEBUG) || defined(_DEBUG)
     {
         Microsoft::WRL::ComPtr<ID3D12Debug> debug_controller;
-        D3D12GetDebugInterface(IID_PPV_ARGS(&debug_controller));
+        D3D12GetDebugInterface(IID_PPV_ARGS(debug_controller.GetAddressOf()));
         debug_controller->EnableDebugLayer();
     }
 #endif
 
-    THROW_IF_FAILED(CreateDXGIFactory2(0, IID_PPV_ARGS(&factory_)));
+    THROW_IF_FAILED(CreateDXGIFactory2(0, IID_PPV_ARGS(factory_.GetAddressOf())));
 }
 
 void DeviceManager::CreateAdapter()
 {
     Microsoft::WRL::ComPtr<IDXGIAdapter4> adapter;
 
-    for (unsigned int i = 0; factory_->EnumAdapterByGpuPreference(i, DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE, IID_PPV_ARGS(&adapter)) != DXGI_ERROR_NOT_FOUND; ++i) 
+    for (unsigned int i = 0; factory_->EnumAdapterByGpuPreference(i, DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE, IID_PPV_ARGS(adapter.GetAddressOf())) != DXGI_ERROR_NOT_FOUND; ++i)
     { 
         DXGI_ADAPTER_DESC1 adapter_desc;
         adapter->GetDesc1(&adapter_desc);
@@ -65,5 +65,5 @@ void DeviceManager::CreateAdapter()
 
 void DeviceManager::CreateDevice()
 { 
-    THROW_IF_FAILED(D3D12CreateDevice(adapter_.Get(), D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&device_)));
+    THROW_IF_FAILED(D3D12CreateDevice(adapter_.Get(), D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(device_.GetAddressOf())));
 }
