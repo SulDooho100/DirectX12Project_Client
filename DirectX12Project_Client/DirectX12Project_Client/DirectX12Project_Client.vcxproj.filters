@@ -19,17 +19,23 @@
     <Filter Include="헤더 파일\Main">
       <UniqueIdentifier>{5a04a7f7-fe45-4020-81f5-f34af489abc8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\System">
-      <UniqueIdentifier>{265460ad-4ca9-4c51-b3a8-1017a9502ff3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="헤더 파일\System">
-      <UniqueIdentifier>{ecf7bf2e-0802-4be7-84c0-a4549eb3944f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Core">
       <UniqueIdentifier>{fce47c01-9539-4408-8562-61a38afa87a3}</UniqueIdentifier>
     </Filter>
     <Filter Include="헤더 파일\Core">
       <UniqueIdentifier>{6320a4d5-5992-46cc-81fb-d64e646ef054}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Graphics">
+      <UniqueIdentifier>{00083153-9034-4ed8-bb7a-9001031eca1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Graphics">
+      <UniqueIdentifier>{f6866bd9-15c0-4b3c-a5d5-d410696894b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\DebugTools">
+      <UniqueIdentifier>{ecf7bf2e-0802-4be7-84c0-a4549eb3944f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\DebugTools">
+      <UniqueIdentifier>{265460ad-4ca9-4c51-b3a8-1017a9502ff3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -45,17 +51,17 @@
     <ClInclude Include="stdafx.h">
       <Filter>헤더 파일\Main</Filter>
     </ClInclude>
-    <ClInclude Include="System\ThrowIfFailed.h">
-      <Filter>헤더 파일\System</Filter>
-    </ClInclude>
     <ClInclude Include="Core\DeviceManager.h">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\CommandManager.h">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\SwapChainManager.h">
-      <Filter>헤더 파일\Core</Filter>
+    <ClInclude Include="Graphics\SwapChainManager.h">
+      <Filter>헤더 파일\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugTools\ThrowIfFailed.h">
+      <Filter>헤더 파일\DebugTools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -84,8 +90,8 @@
     <ClCompile Include="Core\CommandManager.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\SwapChainManager.cpp">
-      <Filter>소스 파일\Core</Filter>
+    <ClCompile Include="Graphics\SwapChainManager.cpp">
+      <Filter>소스 파일\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

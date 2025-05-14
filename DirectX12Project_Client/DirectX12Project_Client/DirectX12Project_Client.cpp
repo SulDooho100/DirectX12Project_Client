@@ -5,7 +5,7 @@
 #include "DirectX12Project_Client.h"
 #include "Core/DeviceManager.h"
 #include "Core/CommandManager.h"
-#include "Core/SwapChainManager.h"
+#include "Graphics/SwapChainManager.h"
 
 #define MAX_LOADSTRING 100
 

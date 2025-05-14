@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SwapChainManager.h"
-#include "DeviceManager.h"
-#include "CommandManager.h"
+#include "../Core/DeviceManager.h"
+#include "../Core/CommandManager.h"
 
 SwapChainManager& SwapChainManager::GetInstance()
 {
