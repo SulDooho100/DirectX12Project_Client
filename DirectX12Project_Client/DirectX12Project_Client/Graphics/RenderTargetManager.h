@@ -18,6 +18,8 @@ public:
     void Initialize();
 
 private:
+    void CreateViewPort();
+    void CreateScissorRect();
     void CreateRenderTargetViewDescriptorHeap();
     void CreateDepthStencilViewDescriptorHeap();
     void CreateRenderTargetViews();
@@ -29,6 +31,9 @@ private:
     void SetCpuDescriptorHandleByKey(std::string key, D3D12_CPU_DESCRIPTOR_HANDLE value);
 
 private:
+    D3D12_VIEWPORT viewport_;
+    D3D12_RECT scissor_rect_;
+
     std::unordered_map<std::string, Microsoft::WRL::ComPtr<ID3D12Resource>> resources_;
     std::unordered_map<std::string, D3D12_CPU_DESCRIPTOR_HANDLE> cpu_descriptor_handles_;
     Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> render_target_view_descriptor_heap_;

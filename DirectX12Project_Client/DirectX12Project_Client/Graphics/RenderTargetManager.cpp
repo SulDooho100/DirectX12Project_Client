@@ -11,10 +11,30 @@ RenderTargetManager& RenderTargetManager::GetInstance()
 
 void RenderTargetManager::Initialize()
 {
+	CreateViewPort();
+	CreateScissorRect();
 	CreateRenderTargetViewDescriptorHeap();
 	CreateDepthStencilViewDescriptorHeap();
 	CreateRenderTargetViews();
 	CreateDepthStencilView();
+}
+
+void RenderTargetManager::CreateViewPort()
+{
+	viewport_.TopLeftX = 0.0f;
+	viewport_.TopLeftY = 0.0f;
+	viewport_.Width = static_cast<float>(SwapChainManager::GetInstance().GetOutputModeDesc().Width);
+	viewport_.Height = static_cast<float>(SwapChainManager::GetInstance().GetOutputModeDesc().Height);
+	viewport_.MinDepth = 0.0f;
+	viewport_.MaxDepth = 1.0f;
+}
+
+void RenderTargetManager::CreateScissorRect()
+{ 
+	scissor_rect_.left = 0;
+	scissor_rect_.top = 0;
+	scissor_rect_.right = static_cast<long>(SwapChainManager::GetInstance().GetOutputModeDesc().Width);
+	scissor_rect_.bottom = static_cast<long>(SwapChainManager::GetInstance().GetOutputModeDesc().Height);
 }
 
 void RenderTargetManager::CreateRenderTargetViewDescriptorHeap()

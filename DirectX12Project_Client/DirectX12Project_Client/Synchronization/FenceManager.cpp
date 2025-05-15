@@ -20,7 +20,7 @@ void FenceManager::WaitForGPU()
 	if (fence_->GetCompletedValue() < fence_value_)
 	{
 		THROW_IF_FAILED(fence_->SetEventOnCompletion(fence_value_, fence_event_));
-		WaitForSingleObject(fence_event_, INFINITE);
+		::WaitForSingleObject(fence_event_, INFINITE);
 	}
 }
 
@@ -39,7 +39,7 @@ void FenceManager::CreateFence()
 
 void FenceManager::CreateFenceEvent()
 {
-	fence_event_ = CreateEvent(nullptr, FALSE, FALSE, nullptr);
+	fence_event_ = ::CreateEvent(nullptr, false, false, nullptr);
 
 	if (fence_event_ == nullptr)
 	{
