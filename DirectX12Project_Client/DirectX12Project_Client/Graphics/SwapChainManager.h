@@ -16,6 +16,9 @@ private:
 
 public:
     void Initialize(HWND hwnd);
+    DXGI_MODE_DESC GetOutputModeDesc();
+    const unsigned int GetBackBufferCount();
+    IDXGISwapChain4* GetSwapChain();
 
 private:
     void CreateOutput(HWND hwnd);
@@ -25,7 +28,8 @@ private:
 private:
     DXGI_MODE_DESC output_mode_desc_;
     Microsoft::WRL::ComPtr<IDXGIOutput> output_;
-     
+    
+    const unsigned int kBackBufferCount = 2;
     unsigned int current_back_buffer_index_;
     Microsoft::WRL::ComPtr<IDXGISwapChain4> swap_chain_;
 };

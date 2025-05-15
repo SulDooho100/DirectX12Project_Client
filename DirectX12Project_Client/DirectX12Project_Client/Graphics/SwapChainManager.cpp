@@ -23,6 +23,21 @@ void SwapChainManager::Initialize(HWND hwnd)
 	}
 }
 
+DXGI_MODE_DESC SwapChainManager::GetOutputModeDesc()
+{
+	return output_mode_desc_;
+}
+
+const unsigned int SwapChainManager::GetBackBufferCount()
+{
+	return kBackBufferCount;
+}
+
+IDXGISwapChain4* SwapChainManager::GetSwapChain()
+{
+	return swap_chain_.Get();
+}
+
 void SwapChainManager::CreateOutput(HWND hwnd)
 {
 	::ZeroMemory(&output_mode_desc_, sizeof(DXGI_MODE_DESC));

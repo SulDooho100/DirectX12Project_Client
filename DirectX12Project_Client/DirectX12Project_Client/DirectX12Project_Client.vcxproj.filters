@@ -63,6 +63,9 @@
     <ClInclude Include="DebugTools\ThrowIfFailed.h">
       <Filter>헤더 파일\DebugTools</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\RenderTargetManager.h">
+      <Filter>헤더 파일\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX12Project_Client.rc">
@@ -91,6 +94,9 @@
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\SwapChainManager.cpp">
+      <Filter>소스 파일\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\RenderTargetManager.cpp">
       <Filter>소스 파일\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
