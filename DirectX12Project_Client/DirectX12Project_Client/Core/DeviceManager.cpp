@@ -9,16 +9,9 @@ DeviceManager& DeviceManager::GetInstance()
 
 void DeviceManager::Initialize()
 {
-    try
-    {
-        CreateFactory();
-        CreateAdapter();
-        CreateDevice(); 
-    }
-    catch (std::wstring message)
-    {
-        std::wcout << message << std::endl;
-    }
+    CreateFactory();
+    CreateAdapter();
+    CreateDevice(); 
 }
 
 ID3D12Device* DeviceManager::GetDevice()

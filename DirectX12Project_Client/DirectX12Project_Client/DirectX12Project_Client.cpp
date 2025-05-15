@@ -7,6 +7,7 @@
 #include "Core/CommandManager.h"
 #include "Graphics/SwapChainManager.h"
 #include "Graphics/RenderTargetManager.h"
+#include "Synchronization/FenceManager.h"
 
 #define MAX_LOADSTRING 100
 
@@ -101,10 +102,18 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
-   DeviceManager::GetInstance().Initialize();
-   CommandManager::GetInstance().Initialize();
-   SwapChainManager::GetInstance().Initialize(hWnd); 
-   RenderTargetManager::GetInstance().Initialize();
+   try
+   { 
+       DeviceManager::GetInstance().Initialize();
+       CommandManager::GetInstance().Initialize();
+       SwapChainManager::GetInstance().Initialize(hWnd);
+       RenderTargetManager::GetInstance().Initialize();
+       FenceManager::GetInstance().Initialize();
+   }
+   catch (std::wstring message)
+   {
+       std::wcout << message << std::endl;
+   }
 
    return TRUE;
 }

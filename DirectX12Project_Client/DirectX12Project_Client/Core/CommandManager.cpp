@@ -10,16 +10,9 @@ CommandManager& CommandManager::GetInstance()
 
 void CommandManager::Initialize()
 {
-	try
-	{ 
-		CreateQueue();
-		CreateAllocator();
-		CreateCommandList(); 
-	}
-	catch (std::wstring message)
-	{
-		std::wcout << message << std::endl;
-	}
+	CreateQueue();
+	CreateAllocator();
+	CreateCommandList(); 
 }
 
 ID3D12CommandQueue* CommandManager::GetQueue()

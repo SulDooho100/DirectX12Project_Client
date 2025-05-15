@@ -11,18 +11,10 @@ RenderTargetManager& RenderTargetManager::GetInstance()
 
 void RenderTargetManager::Initialize()
 {
-	try
-	{
-		CreateRenderTargetViewDescriptorHeap();
-		CreateDepthStencilViewDescriptorHeap();
-		CreateRenderTargetViews();
-		CreateDepthStencilView();
-
-	}
-	catch (std::wstring message)
-	{
-		std::wcout << message << std::endl;
-	}
+	CreateRenderTargetViewDescriptorHeap();
+	CreateDepthStencilViewDescriptorHeap();
+	CreateRenderTargetViews();
+	CreateDepthStencilView();
 }
 
 void RenderTargetManager::CreateRenderTargetViewDescriptorHeap()

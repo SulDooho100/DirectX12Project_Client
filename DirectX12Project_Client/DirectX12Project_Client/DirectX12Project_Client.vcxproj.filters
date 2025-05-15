@@ -37,6 +37,12 @@
     <Filter Include="소스 파일\DebugTools">
       <UniqueIdentifier>{265460ad-4ca9-4c51-b3a8-1017a9502ff3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Synchronization">
+      <UniqueIdentifier>{1fae6040-c3b2-477a-8733-69add90339fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Synchronization">
+      <UniqueIdentifier>{cadd4f26-99b8-44b0-8b18-96e918007ca3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -65,6 +71,9 @@
     </ClInclude>
     <ClInclude Include="Graphics\RenderTargetManager.h">
       <Filter>헤더 파일\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Synchronization\FenceManager.h">
+      <Filter>헤더 파일\Synchronization</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +107,9 @@
     </ClCompile>
     <ClCompile Include="Graphics\RenderTargetManager.cpp">
       <Filter>소스 파일\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Synchronization\FenceManager.cpp">
+      <Filter>소스 파일\Synchronization</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

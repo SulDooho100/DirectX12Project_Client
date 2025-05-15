@@ -11,16 +11,9 @@ SwapChainManager& SwapChainManager::GetInstance()
 
 void SwapChainManager::Initialize(HWND hwnd)
 {
-	try
-	{
-		CreateOutput(hwnd); 
-		ChangeExclusiveFullscreen(hwnd);
-		CreateSwapChain(hwnd);
-	}
-	catch (std::wstring message)
-	{
-		std::wcout << message << std::endl;
-	}
+	CreateOutput(hwnd);
+	ChangeExclusiveFullscreen(hwnd);
+	CreateSwapChain(hwnd);
 }
 
 DXGI_MODE_DESC SwapChainManager::GetOutputModeDesc()
