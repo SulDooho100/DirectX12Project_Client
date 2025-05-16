@@ -43,6 +43,12 @@
     <Filter Include="헤더 파일\Synchronization">
       <UniqueIdentifier>{cadd4f26-99b8-44b0-8b18-96e918007ca3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Scene">
+      <UniqueIdentifier>{806461d6-834f-4bfc-a1d0-acae661f9df7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Scene">
+      <UniqueIdentifier>{9d98d472-7fb8-4ec0-94dc-5df10ccd9e00}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -74,6 +80,9 @@
     </ClInclude>
     <ClInclude Include="Synchronization\FenceManager.h">
       <Filter>헤더 파일\Synchronization</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneManager.h">
+      <Filter>헤더 파일\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +119,9 @@
     </ClCompile>
     <ClCompile Include="Synchronization\FenceManager.cpp">
       <Filter>소스 파일\Synchronization</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneManager.cpp">
+      <Filter>소스 파일\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

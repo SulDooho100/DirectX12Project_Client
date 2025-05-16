@@ -20,6 +20,16 @@ ID3D12CommandQueue* CommandManager::GetQueue()
 	return queue_.Get();
 }
 
+ID3D12CommandAllocator* CommandManager::GetAllocator()
+{
+	return allocator_.Get();
+}
+
+ID3D12GraphicsCommandList* CommandManager::GetCommandList()
+{
+	return command_list_.Get();
+}
+
 void CommandManager::CreateQueue()
 {
 	D3D12_COMMAND_QUEUE_DESC command_queue_desc;

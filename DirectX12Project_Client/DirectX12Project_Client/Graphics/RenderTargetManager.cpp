@@ -19,22 +19,58 @@ void RenderTargetManager::Initialize()
 	CreateDepthStencilView();
 }
 
+D3D12_VIEWPORT* RenderTargetManager::GetViewport()
+{
+	return viewport_.get();
+}
+
+D3D12_RECT* RenderTargetManager::GetScissorRect()
+{
+	return scissor_rect_.get();
+}
+
+ID3D12Resource* RenderTargetManager::GetResourceByKey(const std::string& key)
+{
+	auto iter = resources_.find(key);
+
+	if (iter != resources_.end())
+	{ 
+		return resources_[key].Get();
+	}
+
+	THROW_IF_FAILED(E_FAIL);
+}
+
+D3D12_CPU_DESCRIPTOR_HANDLE& RenderTargetManager::GetCpuDescriptorHandleByKey(const std::string& key)
+{
+	auto iter = cpu_descriptor_handles_.find(key);
+
+	if (iter != cpu_descriptor_handles_.end())
+	{
+		return cpu_descriptor_handles_[key];
+	}
+
+	THROW_IF_FAILED(E_FAIL);
+}
+
 void RenderTargetManager::CreateViewPort()
 {
-	viewport_.TopLeftX = 0.0f;
-	viewport_.TopLeftY = 0.0f;
-	viewport_.Width = static_cast<float>(SwapChainManager::GetInstance().GetOutputModeDesc().Width);
-	viewport_.Height = static_cast<float>(SwapChainManager::GetInstance().GetOutputModeDesc().Height);
-	viewport_.MinDepth = 0.0f;
-	viewport_.MaxDepth = 1.0f;
+	viewport_ = std::make_unique<D3D12_VIEWPORT>();
+	viewport_->TopLeftX = 0.0f;
+	viewport_->TopLeftY = 0.0f;
+	viewport_->Width = static_cast<float>(SwapChainManager::GetInstance().GetOutputModeDesc().Width);
+	viewport_->Height = static_cast<float>(SwapChainManager::GetInstance().GetOutputModeDesc().Height);
+	viewport_->MinDepth = 0.0f;
+	viewport_->MaxDepth = 1.0f;
 }
 
 void RenderTargetManager::CreateScissorRect()
-{ 
-	scissor_rect_.left = 0;
-	scissor_rect_.top = 0;
-	scissor_rect_.right = static_cast<long>(SwapChainManager::GetInstance().GetOutputModeDesc().Width);
-	scissor_rect_.bottom = static_cast<long>(SwapChainManager::GetInstance().GetOutputModeDesc().Height);
+{
+	scissor_rect_ = std::make_unique<D3D12_RECT>();
+	scissor_rect_->left = 0;
+	scissor_rect_->top = 0;
+	scissor_rect_->right = static_cast<long>(SwapChainManager::GetInstance().GetOutputModeDesc().Width);
+	scissor_rect_->bottom = static_cast<long>(SwapChainManager::GetInstance().GetOutputModeDesc().Height);
 }
 
 void RenderTargetManager::CreateRenderTargetViewDescriptorHeap()
@@ -123,7 +159,7 @@ void RenderTargetManager::CreateDepthStencilView()
 	SetCpuDescriptorHandleByKey(key, cpu_descriptor_handle);
 }
 
-void RenderTargetManager::SetResourceByKey(std::string key, Microsoft::WRL::ComPtr<ID3D12Resource> value)
+void RenderTargetManager::SetResourceByKey(const std::string& key, Microsoft::WRL::ComPtr<ID3D12Resource> value)
 {
 	auto iter = resources_.find(key);
 
@@ -137,7 +173,7 @@ void RenderTargetManager::SetResourceByKey(std::string key, Microsoft::WRL::ComP
 	THROW_IF_FAILED(E_FAIL);
 }
 
-void RenderTargetManager::SetCpuDescriptorHandleByKey(std::string key, D3D12_CPU_DESCRIPTOR_HANDLE value)
+void RenderTargetManager::SetCpuDescriptorHandleByKey(const std::string& key, D3D12_CPU_DESCRIPTOR_HANDLE value)
 {
 	auto iter = cpu_descriptor_handles_.find(key);
 
@@ -150,4 +186,3 @@ void RenderTargetManager::SetCpuDescriptorHandleByKey(std::string key, D3D12_CPU
 
 	THROW_IF_FAILED(E_FAIL);
 }
- 

@@ -136,6 +136,7 @@
     <ClInclude Include="Graphics\RenderTargetManager.h" />
     <ClInclude Include="Graphics\SwapChainManager.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Synchronization\FenceManager.h" />
     <ClInclude Include="targetver.h" />
@@ -146,6 +147,7 @@
     <ClCompile Include="DirectX12Project_Client.cpp" />
     <ClCompile Include="Graphics\RenderTargetManager.cpp" />
     <ClCompile Include="Graphics\SwapChainManager.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>

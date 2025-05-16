@@ -18,6 +18,8 @@ private:
 public:
     void Initialize(); 
     ID3D12CommandQueue* GetQueue();
+    ID3D12CommandAllocator* GetAllocator();
+    ID3D12GraphicsCommandList* GetCommandList();
 
 private:
     void CreateQueue();
