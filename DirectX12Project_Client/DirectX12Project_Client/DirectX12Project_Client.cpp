@@ -8,6 +8,7 @@
 #include "Graphics/SwapChainManager.h"
 #include "Graphics/RenderTargetManager.h"
 #include "Synchronization/FenceManager.h"
+#include "Scene/SceneManager.h"
 
 #define MAX_LOADSTRING 100
 
@@ -91,16 +92,12 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_POPUP, CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {
       return FALSE;
    }
-
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
 
    try
    { 
@@ -109,6 +106,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
        SwapChainManager::GetInstance().Initialize(hWnd);
        RenderTargetManager::GetInstance().Initialize();
        FenceManager::GetInstance().Initialize();
+       SceneManager::GetInstance().Initialize();
    }
    catch (std::wstring message)
    {
@@ -200,7 +198,14 @@ int Run()
         }
         else
         {
-
+            try
+            {
+                SceneManager::GetInstance().Draw();
+            }
+            catch (std::wstring message)
+            {
+                std::wcout << message << std::endl;
+            }
         }
     }
 

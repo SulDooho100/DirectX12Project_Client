@@ -26,6 +26,11 @@ const unsigned int SwapChainManager::GetBackBufferCount()
 	return kBackBufferCount;
 }
 
+unsigned int SwapChainManager::GetCurrentBackBufferIndex()
+{
+	return  swap_chain_->GetCurrentBackBufferIndex();
+}
+
 IDXGISwapChain4* SwapChainManager::GetSwapChain()
 {
 	return swap_chain_.Get();
@@ -86,19 +91,12 @@ void SwapChainManager::CreateOutput(HWND hwnd)
  
 void SwapChainManager::ChangeExclusiveFullscreen(HWND hwnd)
 {
-	DEVMODE devmode;
-	::ZeroMemory(&devmode, sizeof(DEVMODE));
-	devmode.dmSize = sizeof(DEVMODE);
-	devmode.dmPelsWidth = output_mode_desc_.Width;
-	devmode.dmPelsHeight = output_mode_desc_.Height;
-	devmode.dmBitsPerPel = 32;
-	devmode.dmFields = DM_PELSWIDTH | DM_PELSHEIGHT | DM_BITSPERPEL;
-	devmode.dmDisplayFrequency = output_mode_desc_.RefreshRate.Numerator / output_mode_desc_.RefreshRate.Denominator;
-
-	ChangeDisplaySettings(&devmode, CDS_FULLSCREEN);
-	 
 	SetWindowLong(hwnd, GWL_STYLE, WS_POPUP);
-	SetWindowPos(hwnd, HWND_TOP, 0, 0, output_mode_desc_.Width, output_mode_desc_.Height, SWP_NOZORDER | SWP_FRAMECHANGED);
+	SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, output_mode_desc_.Width, output_mode_desc_.Height, SWP_FRAMECHANGED | SWP_NOOWNERZORDER | SWP_NOZORDER | SWP_SHOWWINDOW);
+	SetMenu(hwnd, nullptr);
+	DeviceManager::GetInstance().GetFactory()->MakeWindowAssociation(hwnd, DXGI_MWA_NO_ALT_ENTER);
+	ShowWindow(hwnd, SW_SHOW);
+	UpdateWindow(hwnd);
 }
  
 void SwapChainManager::CreateSwapChain(HWND hwnd)
@@ -128,9 +126,5 @@ void SwapChainManager::CreateSwapChain(HWND hwnd)
 	THROW_IF_FAILED(DeviceManager::GetInstance().GetFactory()->CreateSwapChainForHwnd(CommandManager::GetInstance().GetQueue(), hwnd, &swap_chain_desc, &swap_chain_fullscreen_desc, nullptr, swap_chain1.GetAddressOf()));
 	THROW_IF_FAILED(swap_chain1.As(&swap_chain_));
 
-	DeviceManager::GetInstance().GetFactory()->MakeWindowAssociation(hwnd, DXGI_MWA_NO_ALT_ENTER);
-	swap_chain_->SetFullscreenState(true, output_.Get());
-
-	current_back_buffer_index_ = swap_chain_->GetCurrentBackBufferIndex();
+	swap_chain_->SetFullscreenState(true, output_.Get()); 
 }
-
