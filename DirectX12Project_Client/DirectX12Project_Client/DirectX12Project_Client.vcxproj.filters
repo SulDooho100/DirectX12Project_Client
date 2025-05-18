@@ -49,6 +49,12 @@
     <Filter Include="헤더 파일\Scene">
       <UniqueIdentifier>{9d98d472-7fb8-4ec0-94dc-5df10ccd9e00}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\MultiThread">
+      <UniqueIdentifier>{040548f6-5b45-41f1-8e50-033f35ac3f4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\MultiThread">
+      <UniqueIdentifier>{f8b6e762-93d0-4e3b-931e-eee496341de9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -83,6 +89,9 @@
     </ClInclude>
     <ClInclude Include="Scene\SceneManager.h">
       <Filter>헤더 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiThread\ThreadPoolManager.h">
+      <Filter>헤더 파일\MultiThread</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -122,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="Scene\SceneManager.cpp">
       <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiThread\ThreadPoolManager.cpp">
+      <Filter>소스 파일\MultiThread</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -106,6 +106,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>$(ProjectDir)\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -135,6 +136,7 @@
     <ClInclude Include="DirectX12Project_Client.h" />
     <ClInclude Include="Graphics\RenderTargetManager.h" />
     <ClInclude Include="Graphics\SwapChainManager.h" />
+    <ClInclude Include="MultiThread\ThreadPoolManager.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="stdafx.h" />
@@ -147,6 +149,7 @@
     <ClCompile Include="DirectX12Project_Client.cpp" />
     <ClCompile Include="Graphics\RenderTargetManager.cpp" />
     <ClCompile Include="Graphics\SwapChainManager.cpp" />
+    <ClCompile Include="MultiThread\ThreadPoolManager.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

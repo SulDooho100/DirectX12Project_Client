@@ -31,7 +31,6 @@ private:
     Microsoft::WRL::ComPtr<IDXGIOutput> output_;
     
     const unsigned int kBackBufferCount = 2;
-   // unsigned int current_back_buffer_index_;
     Microsoft::WRL::ComPtr<IDXGISwapChain4> swap_chain_;
 };
 

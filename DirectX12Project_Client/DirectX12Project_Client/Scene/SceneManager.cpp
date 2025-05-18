@@ -57,9 +57,5 @@ void SceneManager::Draw()
 
 	DXGI_PRESENT_PARAMETERS present_parameters;
 	::ZeroMemory(&present_parameters, sizeof(DXGI_PRESENT_PARAMETERS));
-	present_parameters.DirtyRectsCount = 0;
-	present_parameters.pDirtyRects = nullptr;
-	present_parameters.pScrollRect = nullptr;
-	present_parameters.pScrollOffset = nullptr;
 	THROW_IF_FAILED(SwapChainManager::GetInstance().GetSwapChain()->Present1(1, 0, &present_parameters));
 }

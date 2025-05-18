@@ -16,9 +16,15 @@
 
 #include <vector>
 #include <unordered_map>
+#include <queue>
 
 #include <wrl.h>
 #include <shellapi.h>
+
+#include <thread>
+#include <functional>
+#include <mutex>
+#include <condition_variable>
 
 #include <d3d12.h>
 #include <dxgi1_6.h>

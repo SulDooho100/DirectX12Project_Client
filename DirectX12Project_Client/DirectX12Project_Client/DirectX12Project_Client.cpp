@@ -8,6 +8,7 @@
 #include "Graphics/SwapChainManager.h"
 #include "Graphics/RenderTargetManager.h"
 #include "Synchronization/FenceManager.h"
+#include "MultiThread/ThreadPoolManager.h"
 #include "Scene/SceneManager.h"
 
 #define MAX_LOADSTRING 100
@@ -106,6 +107,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
        SwapChainManager::GetInstance().Initialize(hWnd);
        RenderTargetManager::GetInstance().Initialize();
        FenceManager::GetInstance().Initialize();
+       ThreadPoolManager::GetInstance().Initialize();
        SceneManager::GetInstance().Initialize();
    }
    catch (std::wstring message)
