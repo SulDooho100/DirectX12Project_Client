@@ -25,12 +25,14 @@ public:
     void Present() const;
 
 private:
+    void CreateOutput(HWND hwnd);
     void GetBestRateAndResolution();
-    void ChangeExclusiveFullscreen(HWND hwnd);
     void CreateSwapChain(HWND hwnd);
+    void SetFullscreen(HWND hwnd);
 
 private:
     std::unique_ptr<DXGI_MODE_DESC> output_mode_desc_;
+    Microsoft::WRL::ComPtr<IDXGIOutput> output_;
 
     const unsigned int kBackBufferCount = 2;
     Microsoft::WRL::ComPtr<IDXGISwapChain4> swap_chain_;

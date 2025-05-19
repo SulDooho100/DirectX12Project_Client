@@ -11,9 +11,10 @@ SwapChainManager& SwapChainManager::GetInstance()
 
 void SwapChainManager::Initialize(HWND hwnd)
 {
+	CreateOutput(hwnd);
 	GetBestRateAndResolution();
-	ChangeExclusiveFullscreen(hwnd);
 	CreateSwapChain(hwnd);
+	SetFullscreen(hwnd);
 }
 
 DXGI_MODE_DESC* SwapChainManager::GetOutputModeDesc() const
@@ -41,6 +42,30 @@ void SwapChainManager::Present() const
 	DXGI_PRESENT_PARAMETERS present_parameters;
 	::ZeroMemory(&present_parameters, sizeof(DXGI_PRESENT_PARAMETERS));
 	THROW_IF_FAILED(SwapChainManager::GetInstance().GetSwapChain()->Present1(1, 0, &present_parameters));
+}
+
+void SwapChainManager::CreateOutput(HWND hwnd)
+{
+	HMONITOR current_monitor = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
+
+	MONITORINFOEX monitor_info;
+	::ZeroMemory(&monitor_info, sizeof(MONITORINFOEX));
+	monitor_info.cbSize = sizeof(MONITORINFOEX);
+	GetMonitorInfo(current_monitor, &monitor_info);
+
+	Microsoft::WRL::ComPtr<IDXGIOutput> output;
+	for (unsigned int i = 0; DeviceManager::GetInstance().GetAdapter()->EnumOutputs(i, &output) != DXGI_ERROR_NOT_FOUND; ++i)
+	{
+		DXGI_OUTPUT_DESC output_desc;
+		output->GetDesc(&output_desc);
+
+		if (wcscmp(monitor_info.szDevice, output_desc.DeviceName) == 0)
+		{
+			output_ = output;
+
+			return;
+		}
+	}
 }
 
 void SwapChainManager::GetBestRateAndResolution()
@@ -77,17 +102,7 @@ void SwapChainManager::GetBestRateAndResolution()
 			} 
 		}
 	} 
-}
- 
-void SwapChainManager::ChangeExclusiveFullscreen(HWND hwnd)
-{
-	SetWindowLong(hwnd, GWL_STYLE, WS_POPUP);
-	SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, output_mode_desc_->Width, output_mode_desc_->Height, SWP_FRAMECHANGED | SWP_NOOWNERZORDER | SWP_NOZORDER | SWP_SHOWWINDOW);
-	SetMenu(hwnd, nullptr);
-	DeviceManager::GetInstance().GetFactory()->MakeWindowAssociation(hwnd, DXGI_MWA_NO_ALT_ENTER);
-	ShowWindow(hwnd, SW_SHOW);
-	UpdateWindow(hwnd);
-}
+} 
  
 void SwapChainManager::CreateSwapChain(HWND hwnd)
 { 
@@ -113,8 +128,32 @@ void SwapChainManager::CreateSwapChain(HWND hwnd)
 	swap_chain_fullscreen_desc.Windowed = false;
 
 	Microsoft::WRL::ComPtr<IDXGISwapChain1> swap_chain1;
-	THROW_IF_FAILED(DeviceManager::GetInstance().GetFactory()->CreateSwapChainForHwnd(QueueManager::GetInstance().GetQueue(), hwnd, &swap_chain_desc, &swap_chain_fullscreen_desc, nullptr, swap_chain1.GetAddressOf()));
-	THROW_IF_FAILED(swap_chain1.As(&swap_chain_));
+	if (output_)
+	{
+		THROW_IF_FAILED(DeviceManager::GetInstance().GetFactory()->CreateSwapChainForHwnd(QueueManager::GetInstance().GetQueue(), hwnd, &swap_chain_desc, &swap_chain_fullscreen_desc, nullptr, swap_chain1.GetAddressOf()));
+		THROW_IF_FAILED(swap_chain_->SetFullscreenState(true, nullptr));
+	}
+	else
+	{
+		THROW_IF_FAILED(DeviceManager::GetInstance().GetFactory()->CreateSwapChainForHwnd(QueueManager::GetInstance().GetQueue(), hwnd, &swap_chain_desc, nullptr, nullptr, swap_chain1.GetAddressOf()));
+	}
 
-	(swap_chain_->SetFullscreenState(true, nullptr));
+	THROW_IF_FAILED(swap_chain1.As(&swap_chain_));
+}
+
+void SwapChainManager::SetFullscreen(HWND hwnd)
+{
+	DeviceManager::GetInstance().GetFactory()->MakeWindowAssociation(hwnd, DXGI_MWA_NO_ALT_ENTER);
+	SetWindowLong(hwnd, GWL_STYLE, WS_POPUP);
+	SetMenu(hwnd, nullptr);
+	if (output_)
+	{
+		SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, output_mode_desc_->Width, output_mode_desc_->Height, SWP_FRAMECHANGED | SWP_NOOWNERZORDER | SWP_NOZORDER | SWP_SHOWWINDOW);
+	}
+	else
+	{ 
+		SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED | SWP_NOOWNERZORDER | SWP_NOZORDER | SWP_SHOWWINDOW);
+	}
+	ShowWindow(hwnd, SW_SHOW);
+	UpdateWindow(hwnd);
 }
