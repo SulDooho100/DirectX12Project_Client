@@ -14,17 +14,17 @@ void DeviceManager::Initialize()
     CreateDevice(); 
 }
 
-ID3D12Device* DeviceManager::GetDevice()
+ID3D12Device* DeviceManager::GetDevice() const
 {
 	return device_.Get();
 }
 
-IDXGIFactory6* DeviceManager::GetFactory()
+IDXGIFactory6* DeviceManager::GetFactory() const
 {
     return factory_.Get();
 }
 
-IDXGIAdapter4* DeviceManager::GetAdapter()
+IDXGIAdapter4* DeviceManager::GetAdapter() const
 {
     return adapter_.Get();
 }
@@ -34,8 +34,17 @@ void DeviceManager::CreateFactory()
 #if defined(DEBUG) || defined(_DEBUG)
     {
         Microsoft::WRL::ComPtr<ID3D12Debug> debug_controller;
-        D3D12GetDebugInterface(IID_PPV_ARGS(debug_controller.GetAddressOf()));
+        THROW_IF_FAILED(D3D12GetDebugInterface(IID_PPV_ARGS(debug_controller.GetAddressOf())));
         debug_controller->EnableDebugLayer();
+
+        Microsoft::WRL::ComPtr<ID3D12DeviceRemovedExtendedDataSettings> device_removed_extended_data_settings;
+        THROW_IF_FAILED(D3D12GetDebugInterface(IID_PPV_ARGS(&device_removed_extended_data_settings)));
+        device_removed_extended_data_settings->SetAutoBreadcrumbsEnablement(D3D12_DRED_ENABLEMENT_FORCED_ON);
+        device_removed_extended_data_settings->SetPageFaultEnablement(D3D12_DRED_ENABLEMENT_FORCED_ON);
+
+        Microsoft::WRL::ComPtr<IDXGIInfoQueue> info_queue;
+        THROW_IF_FAILED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(&info_queue)));
+        THROW_IF_FAILED(info_queue->SetBreakOnSeverity(DXGI_DEBUG_ALL, DXGI_INFO_QUEUE_MESSAGE_SEVERITY_ERROR, true));
     }
 #endif
 
@@ -55,7 +64,7 @@ void DeviceManager::CreateAdapter()
         {
             adapter_ = adapter; 
 
-            break;
+            return;
         }
     }
 
@@ -67,5 +76,5 @@ void DeviceManager::CreateAdapter()
 
 void DeviceManager::CreateDevice()
 { 
-    THROW_IF_FAILED(D3D12CreateDevice(adapter_.Get(), D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(device_.GetAddressOf())));
+    THROW_IF_FAILED(D3D12CreateDevice(adapter_.Get(), D3D_FEATURE_LEVEL_12_0, IID_PPV_ARGS(device_.GetAddressOf())));
 }

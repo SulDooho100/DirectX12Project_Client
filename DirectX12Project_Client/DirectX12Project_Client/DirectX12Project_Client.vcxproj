@@ -130,8 +130,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Core\CommandManager.h" />
     <ClInclude Include="Core\DeviceManager.h" />
+    <ClInclude Include="Core\QueueManager.h" />
     <ClInclude Include="DebugTools\ThrowIfFailed.h" />
     <ClInclude Include="DirectX12Project_Client.h" />
     <ClInclude Include="Graphics\RenderTargetManager.h" />
@@ -141,11 +141,13 @@
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Synchronization\FenceManager.h" />
+    <ClInclude Include="Synchronization\FrameResource.h" />
+    <ClInclude Include="Synchronization\FrameResourceManager.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Core\CommandManager.cpp" />
     <ClCompile Include="Core\DeviceManager.cpp" />
+    <ClCompile Include="Core\QueueManager.cpp" />
     <ClCompile Include="DirectX12Project_Client.cpp" />
     <ClCompile Include="Graphics\RenderTargetManager.cpp" />
     <ClCompile Include="Graphics\SwapChainManager.cpp" />
@@ -155,6 +157,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Synchronization\FenceManager.cpp" />
+    <ClCompile Include="Synchronization\FrameResource.cpp" />
+    <ClCompile Include="Synchronization\FrameResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX12Project_Client.rc" />

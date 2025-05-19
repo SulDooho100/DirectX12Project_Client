@@ -16,20 +16,22 @@ private:
 
 public:
     void Initialize(HWND hwnd);
-    DXGI_MODE_DESC GetOutputModeDesc();
-    const unsigned int GetBackBufferCount();
-    unsigned int GetCurrentBackBufferIndex();
-    IDXGISwapChain4* GetSwapChain();
+
+    DXGI_MODE_DESC* GetOutputModeDesc() const;
+    const unsigned int GetBackBufferCount() const;
+    unsigned int GetCurrentBackBufferIndex() const;
+    IDXGISwapChain4* GetSwapChain() const;
+
+    void Present() const;
 
 private:
-    void CreateOutput(HWND hwnd);
+    void GetBestRateAndResolution();
     void ChangeExclusiveFullscreen(HWND hwnd);
     void CreateSwapChain(HWND hwnd);
 
 private:
-    DXGI_MODE_DESC output_mode_desc_;
-    Microsoft::WRL::ComPtr<IDXGIOutput> output_;
-    
+    std::unique_ptr<DXGI_MODE_DESC> output_mode_desc_;
+
     const unsigned int kBackBufferCount = 2;
     Microsoft::WRL::ComPtr<IDXGISwapChain4> swap_chain_;
 };

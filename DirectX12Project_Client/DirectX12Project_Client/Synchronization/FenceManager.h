@@ -16,7 +16,7 @@ private:
 
 public:
     void Initialize();  
-    void WaitForGPU();
+    void WaitForGPU() const;
     void Signal();
 
 private:

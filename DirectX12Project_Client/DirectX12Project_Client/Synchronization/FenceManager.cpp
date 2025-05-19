@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "FenceManager.h"
+#include "FrameResourceManager.h"
 #include "../Core/DeviceManager.h"
-#include "../Core/CommandManager.h"
+#include "../Core/QueueManager.h"
 
 FenceManager& FenceManager::GetInstance()
 {
@@ -15,11 +16,12 @@ void FenceManager::Initialize()
 	CreateFenceEvent();
 }
 
-void FenceManager::WaitForGPU()
+void FenceManager::WaitForGPU() const
 {
-	if (fence_->GetCompletedValue() < fence_value_)
+	unsigned long long current_frame_fence_value = FrameResourceManager::GetInstance().GetCurrentFrameResourceFenceValue();
+	if (fence_->GetCompletedValue() < current_frame_fence_value)
 	{
-		THROW_IF_FAILED(fence_->SetEventOnCompletion(fence_value_, fence_event_));
+		THROW_IF_FAILED(fence_->SetEventOnCompletion(current_frame_fence_value, fence_event_));
 		::WaitForSingleObject(fence_event_, INFINITE);
 	}
 }
@@ -27,7 +29,8 @@ void FenceManager::WaitForGPU()
 void FenceManager::Signal()
 {
 	++fence_value_;
-	THROW_IF_FAILED(CommandManager::GetInstance().GetQueue()->Signal(fence_.Get(), fence_value_));
+	FrameResourceManager::GetInstance().SetCurrentFrameResourceFenceValue(fence_value_);
+	THROW_IF_FAILED(QueueManager::GetInstance().GetQueue()->Signal(fence_.Get(), fence_value_));
 }
 
 void FenceManager::CreateFence()

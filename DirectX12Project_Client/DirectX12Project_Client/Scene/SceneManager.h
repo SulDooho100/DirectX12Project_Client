@@ -16,7 +16,7 @@ private:
 
 public:
     void Initialize();
-    void Draw();
+    void Draw() const;
 
 private: 
 

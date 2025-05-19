@@ -19,12 +19,12 @@ void RenderTargetManager::Initialize()
 	CreateDepthStencilView();
 }
 
-D3D12_VIEWPORT* RenderTargetManager::GetViewport()
+D3D12_VIEWPORT* RenderTargetManager::GetViewport() const
 {
 	return viewport_.get();
 }
 
-D3D12_RECT* RenderTargetManager::GetScissorRect()
+D3D12_RECT* RenderTargetManager::GetScissorRect() const
 {
 	return scissor_rect_.get();
 }
@@ -33,24 +33,24 @@ ID3D12Resource* RenderTargetManager::GetResourceByKey(const std::string& key)
 {
 	auto iter = resources_.find(key);
 
-	if (iter != resources_.end())
-	{ 
-		return resources_[key].Get();
+	if (iter == resources_.end())
+	{
+		THROW_IF_FAILED(E_FAIL);
 	}
 
-	THROW_IF_FAILED(E_FAIL);
+	return resources_[key].Get();
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE& RenderTargetManager::GetCpuDescriptorHandleByKey(const std::string& key)
 {
 	auto iter = cpu_descriptor_handles_.find(key);
 
-	if (iter != cpu_descriptor_handles_.end())
+	if (iter == cpu_descriptor_handles_.end())
 	{
-		return cpu_descriptor_handles_[key];
+		THROW_IF_FAILED(E_FAIL);
 	}
 
-	THROW_IF_FAILED(E_FAIL);
+	return cpu_descriptor_handles_[key];
 }
 
 void RenderTargetManager::CreateViewPort()
@@ -58,8 +58,8 @@ void RenderTargetManager::CreateViewPort()
 	viewport_ = std::make_unique<D3D12_VIEWPORT>();
 	viewport_->TopLeftX = 0.0f;
 	viewport_->TopLeftY = 0.0f;
-	viewport_->Width = static_cast<float>(SwapChainManager::GetInstance().GetOutputModeDesc().Width);
-	viewport_->Height = static_cast<float>(SwapChainManager::GetInstance().GetOutputModeDesc().Height);
+	viewport_->Width = static_cast<float>(SwapChainManager::GetInstance().GetOutputModeDesc()->Width);
+	viewport_->Height = static_cast<float>(SwapChainManager::GetInstance().GetOutputModeDesc()->Height);
 	viewport_->MinDepth = 0.0f;
 	viewport_->MaxDepth = 1.0f;
 }
@@ -69,8 +69,8 @@ void RenderTargetManager::CreateScissorRect()
 	scissor_rect_ = std::make_unique<D3D12_RECT>();
 	scissor_rect_->left = 0;
 	scissor_rect_->top = 0;
-	scissor_rect_->right = static_cast<long>(SwapChainManager::GetInstance().GetOutputModeDesc().Width);
-	scissor_rect_->bottom = static_cast<long>(SwapChainManager::GetInstance().GetOutputModeDesc().Height);
+	scissor_rect_->right = static_cast<long>(SwapChainManager::GetInstance().GetOutputModeDesc()->Width);
+	scissor_rect_->bottom = static_cast<long>(SwapChainManager::GetInstance().GetOutputModeDesc()->Height);
 }
 
 void RenderTargetManager::CreateRenderTargetViewDescriptorHeap()
@@ -124,8 +124,8 @@ void RenderTargetManager::CreateDepthStencilView()
 	::ZeroMemory(&resource_desc, sizeof(D3D12_RESOURCE_DESC));
 	resource_desc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 	resource_desc.Alignment = 0;
-	resource_desc.Width = SwapChainManager::GetInstance().GetOutputModeDesc().Width;
-	resource_desc.Height = SwapChainManager::GetInstance().GetOutputModeDesc().Height;
+	resource_desc.Width = SwapChainManager::GetInstance().GetOutputModeDesc()->Width;
+	resource_desc.Height = SwapChainManager::GetInstance().GetOutputModeDesc()->Height;
 	resource_desc.DepthOrArraySize = 1;
 	resource_desc.MipLevels = 1;
 	resource_desc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;

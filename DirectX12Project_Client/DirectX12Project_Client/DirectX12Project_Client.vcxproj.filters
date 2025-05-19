@@ -72,9 +72,6 @@
     <ClInclude Include="Core\DeviceManager.h">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\CommandManager.h">
-      <Filter>헤더 파일\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics\SwapChainManager.h">
       <Filter>헤더 파일\Graphics</Filter>
     </ClInclude>
@@ -92,6 +89,15 @@
     </ClInclude>
     <ClInclude Include="MultiThread\ThreadPoolManager.h">
       <Filter>헤더 파일\MultiThread</Filter>
+    </ClInclude>
+    <ClInclude Include="Synchronization\FrameResourceManager.h">
+      <Filter>헤더 파일\Synchronization</Filter>
+    </ClInclude>
+    <ClInclude Include="Synchronization\FrameResource.h">
+      <Filter>헤더 파일\Synchronization</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\QueueManager.h">
+      <Filter>헤더 파일\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -117,9 +123,6 @@
     <ClCompile Include="Core\DeviceManager.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\CommandManager.cpp">
-      <Filter>소스 파일\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics\SwapChainManager.cpp">
       <Filter>소스 파일\Graphics</Filter>
     </ClCompile>
@@ -134,6 +137,15 @@
     </ClCompile>
     <ClCompile Include="MultiThread\ThreadPoolManager.cpp">
       <Filter>소스 파일\MultiThread</Filter>
+    </ClCompile>
+    <ClCompile Include="Synchronization\FrameResourceManager.cpp">
+      <Filter>소스 파일\Synchronization</Filter>
+    </ClCompile>
+    <ClCompile Include="Synchronization\FrameResource.cpp">
+      <Filter>소스 파일\Synchronization</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\QueueManager.cpp">
+      <Filter>소스 파일\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

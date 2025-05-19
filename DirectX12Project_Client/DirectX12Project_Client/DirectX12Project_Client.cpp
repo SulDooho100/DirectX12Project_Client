@@ -4,10 +4,11 @@
 #include "stdafx.h"
 #include "DirectX12Project_Client.h"
 #include "Core/DeviceManager.h"
-#include "Core/CommandManager.h"
+#include "Core/QueueManager.h"
 #include "Graphics/SwapChainManager.h"
 #include "Graphics/RenderTargetManager.h"
 #include "Synchronization/FenceManager.h"
+#include "Synchronization/FrameResourceManager.h"
 #include "MultiThread/ThreadPoolManager.h"
 #include "Scene/SceneManager.h"
 
@@ -103,10 +104,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    try
    { 
        DeviceManager::GetInstance().Initialize();
-       CommandManager::GetInstance().Initialize();
+       QueueManager::GetInstance().Initialize();
        SwapChainManager::GetInstance().Initialize(hWnd);
        RenderTargetManager::GetInstance().Initialize();
        FenceManager::GetInstance().Initialize();
+       FrameResourceManager::GetInstance().Initialize();
        ThreadPoolManager::GetInstance().Initialize();
        SceneManager::GetInstance().Initialize();
    }

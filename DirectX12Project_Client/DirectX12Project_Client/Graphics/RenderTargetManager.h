@@ -16,8 +16,8 @@ private:
 
 public:
     void Initialize();
-    D3D12_VIEWPORT* GetViewport();
-    D3D12_RECT* GetScissorRect();
+    D3D12_VIEWPORT* GetViewport() const;
+    D3D12_RECT* GetScissorRect() const;
     ID3D12Resource* GetResourceByKey(const std::string& key);
     D3D12_CPU_DESCRIPTOR_HANDLE& GetCpuDescriptorHandleByKey(const std::string& key);
 
