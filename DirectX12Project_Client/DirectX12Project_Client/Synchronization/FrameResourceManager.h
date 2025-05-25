@@ -19,7 +19,7 @@ public:
     void Initialize(); 
 
     std::vector<ID3D12GraphicsCommandList*> GetCurrentFrameResourceAllCommandLists() const;
-    void SetCurrentFrameResourceFenceValue(unsigned long long fence_value);
+    void SetCurrentFrameResourceFenceValue(const unsigned long long fence_value);
     unsigned long long GetCurrentFrameResourceFenceValue() const;
 
     void ResetCurrentFrameResource();

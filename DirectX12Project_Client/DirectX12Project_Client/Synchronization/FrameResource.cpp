@@ -15,7 +15,7 @@ unsigned long long FrameResource::GetFenceValue() const
     return fence_value_;
 }
 
-void FrameResource::SetFenceValue(unsigned long long fence_value)
+void FrameResource::SetFenceValue(const unsigned long long fence_value)
 {
     fence_value_ = fence_value;
 }

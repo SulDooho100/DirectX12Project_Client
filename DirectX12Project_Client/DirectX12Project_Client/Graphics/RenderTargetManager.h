@@ -31,8 +31,8 @@ private:
 
     void CreateBackBufferRenderTargetViews(D3D12_CPU_DESCRIPTOR_HANDLE& cpu_descriptor_handle);
 
-    void SetResourceByKey(const std::string& key, Microsoft::WRL::ComPtr<ID3D12Resource> value);
-    void SetCpuDescriptorHandleByKey(const std::string& key, D3D12_CPU_DESCRIPTOR_HANDLE value);
+    void SetResourceByKey(const std::string& key, const Microsoft::WRL::ComPtr<ID3D12Resource> value);
+    void SetCpuDescriptorHandleByKey(const std::string& key, const D3D12_CPU_DESCRIPTOR_HANDLE value);
 
 private:
     std::unique_ptr<D3D12_VIEWPORT> viewport_;

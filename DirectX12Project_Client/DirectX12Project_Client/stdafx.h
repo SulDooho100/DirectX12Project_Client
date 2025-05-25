@@ -32,9 +32,12 @@
 #include <DirectXMath.h>
 #include <dxgidebug.h>
 
+#include <fbxsdk.h>
+
 #include "DebugTools/ThrowIfFailed.h"
  
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "dxguid.lib")
+#pragma comment(lib, "libfbxsdk.lib")

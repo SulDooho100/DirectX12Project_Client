@@ -159,7 +159,7 @@ void RenderTargetManager::CreateDepthStencilView()
 	SetCpuDescriptorHandleByKey(key, cpu_descriptor_handle);
 }
 
-void RenderTargetManager::SetResourceByKey(const std::string& key, Microsoft::WRL::ComPtr<ID3D12Resource> value)
+void RenderTargetManager::SetResourceByKey(const std::string& key, const Microsoft::WRL::ComPtr<ID3D12Resource> value)
 {
 	auto iter = resources_.find(key);
 
@@ -173,7 +173,7 @@ void RenderTargetManager::SetResourceByKey(const std::string& key, Microsoft::WR
 	THROW_IF_FAILED(E_FAIL);
 }
 
-void RenderTargetManager::SetCpuDescriptorHandleByKey(const std::string& key, D3D12_CPU_DESCRIPTOR_HANDLE value)
+void RenderTargetManager::SetCpuDescriptorHandleByKey(const std::string& key, const D3D12_CPU_DESCRIPTOR_HANDLE value)
 {
 	auto iter = cpu_descriptor_handles_.find(key);
 

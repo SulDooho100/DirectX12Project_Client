@@ -15,7 +15,7 @@ public:
     void Initialize();
 
     unsigned long long GetFenceValue() const;
-    void SetFenceValue(unsigned long long fence_value);
+    void SetFenceValue(const unsigned long long fence_value);
     std::vector<ID3D12GraphicsCommandList*> GetAllCommandLists() const;
     ID3D12GraphicsCommandList* GetMainThreadCommandList() const;
     std::vector<ID3D12GraphicsCommandList*> GetAllWorkerThreadCommandLists() const;
