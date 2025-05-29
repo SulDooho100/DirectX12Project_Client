@@ -12,12 +12,19 @@ public:
 
 private:
     LoadManager() = default;
-    ~LoadManager() = default;
+    ~LoadManager();
 
 public:
     void Initialize();
+     
+private:
+    void CreateFbxSdkObjects();
+
+    void SaveFbxToGameAsset(const std::string& file_path);
+    void TraverseNode(const std::string& output_path, FbxNode* node);
+    void ExtractMesh(const std::string& output_path, FbxMesh* mesh);
 
 private:
-
-private:
+    FbxManager* fbx_manager_;
+    FbxIOSettings* settings_;
 };
