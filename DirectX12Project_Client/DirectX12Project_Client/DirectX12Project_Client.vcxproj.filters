@@ -102,8 +102,11 @@
     <ClInclude Include="Scene\Mesh.h">
       <Filter>헤더 파일\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\LoadManager.h">
+    <ClInclude Include="Scene\VertexTypes.h">
       <Filter>헤더 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\FbxSdkManager.h">
+      <Filter>소스 파일\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -156,8 +159,8 @@
     <ClCompile Include="Scene\Mesh.cpp">
       <Filter>소스 파일\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\LoadManager.cpp">
-      <Filter>소스 파일\Scene</Filter>
+    <ClCompile Include="Scene\FbxSdkManager.cpp">
+      <Filter>헤더 파일\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,18 +1,18 @@
 #pragma once
 
-class LoadManager
+class FbxSdkManager
 {
 public:
-    static LoadManager& GetInstance();
+    static FbxSdkManager& GetInstance();
 
-    LoadManager(const LoadManager&) = delete;
-    LoadManager& operator=(const LoadManager&) = delete;
-    LoadManager(LoadManager&&) = delete;
-    LoadManager& operator=(LoadManager&&) = delete;
+    FbxSdkManager(const FbxSdkManager&) = delete;
+    FbxSdkManager& operator=(const FbxSdkManager&) = delete;
+    FbxSdkManager(FbxSdkManager&&) = delete;
+    FbxSdkManager& operator=(FbxSdkManager&&) = delete;
 
 private:
-    LoadManager() = default;
-    ~LoadManager();
+    FbxSdkManager() = default;
+    ~FbxSdkManager();
 
 public:
     void Initialize();

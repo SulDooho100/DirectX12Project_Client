@@ -10,7 +10,7 @@
 #include "Synchronization/FenceManager.h"
 #include "Synchronization/FrameResourceManager.h"
 #include "MultiThread/ThreadPoolManager.h"
-#include "Scene/LoadManager.h"
+#include "Scene/FbxSdkManager.h"
 #include "Scene/SceneManager.h"
 
 #define MAX_LOADSTRING 100
@@ -111,7 +111,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
        FenceManager::GetInstance().Initialize();
        FrameResourceManager::GetInstance().Initialize();
        ThreadPoolManager::GetInstance().Initialize();
-       LoadManager::GetInstance().Initialize();
+       FbxSdkManager::GetInstance().Initialize();
        SceneManager::GetInstance().Initialize();
    }
    catch (std::wstring message)

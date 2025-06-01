@@ -143,9 +143,10 @@
     <ClInclude Include="Graphics\SwapChainManager.h" />
     <ClInclude Include="MultiThread\ThreadPoolManager.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="Scene\LoadManager.h" />
+    <ClInclude Include="Scene\FbxSdkManager.h" />
     <ClInclude Include="Scene\Mesh.h" />
     <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Scene\VertexTypes.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Synchronization\FenceManager.h" />
     <ClInclude Include="Synchronization\FrameResource.h" />
@@ -159,7 +160,7 @@
     <ClCompile Include="Graphics\RenderTargetManager.cpp" />
     <ClCompile Include="Graphics\SwapChainManager.cpp" />
     <ClCompile Include="MultiThread\ThreadPoolManager.cpp" />
-    <ClCompile Include="Scene\LoadManager.cpp" />
+    <ClCompile Include="Scene\FbxSdkManager.cpp" />
     <ClCompile Include="Scene\Mesh.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="stdafx.cpp">

@@ -1,15 +1,13 @@
 #include "stdafx.h"
-#include "LoadManager.h"
-#include <filesystem>
-#include <fstream>
+#include "FbxSdkManager.h"
 
-LoadManager& LoadManager::GetInstance()
+FbxSdkManager& FbxSdkManager::GetInstance()
 {
-	static LoadManager instance;
+	static FbxSdkManager instance;
 	return instance;
 }
 
-LoadManager::~LoadManager()
+FbxSdkManager::~FbxSdkManager()
 {
     if (fbx_manager_)
     {
@@ -17,7 +15,7 @@ LoadManager::~LoadManager()
     }
 }
 
-void LoadManager::Initialize()
+void FbxSdkManager::Initialize()
 {
     CreateFbxSdkObjects();
 
@@ -39,14 +37,14 @@ void LoadManager::Initialize()
     }
 }
 
-void LoadManager::CreateFbxSdkObjects()
+void FbxSdkManager::CreateFbxSdkObjects()
 {
     fbx_manager_ = FbxManager::Create();
     settings_ = FbxIOSettings::Create(fbx_manager_, IOSROOT);
     fbx_manager_->SetIOSettings(settings_);
 } 
 
-void LoadManager::SaveFbxToGameAsset(const std::string& file_path) 
+void FbxSdkManager::SaveFbxToGameAsset(const std::string& file_path)
 {
     FbxImporter* importer = FbxImporter::Create(fbx_manager_, "");
     if (importer->Initialize(file_path.c_str(), -1, fbx_manager_->GetIOSettings()) == false) 
@@ -81,7 +79,7 @@ void LoadManager::SaveFbxToGameAsset(const std::string& file_path)
     scene->Destroy();
 }
 
-void LoadManager::TraverseNode(const std::string& output_path, FbxNode* node)
+void FbxSdkManager::TraverseNode(const std::string& output_path, FbxNode* node)
 {
     FbxMesh* mesh = node->GetMesh();
 
@@ -96,7 +94,7 @@ void LoadManager::TraverseNode(const std::string& output_path, FbxNode* node)
     }
 }
 
-void LoadManager::ExtractMesh(const std::string& output_path, FbxMesh* mesh)
+void FbxSdkManager::ExtractMesh(const std::string& output_path, FbxMesh* mesh)
 { 
     FbxGeometryConverter converter(mesh->GetScene()->GetFbxManager());
     converter.Triangulate(mesh, true);
@@ -105,13 +103,12 @@ void LoadManager::ExtractMesh(const std::string& output_path, FbxMesh* mesh)
     const FbxGeometryElementNormal* normals = mesh->GetElementNormal();
     const FbxGeometryElementTangent* tangents = mesh->GetElementTangent();
     const FbxGeometryElementBinormal* binormals = mesh->GetElementBinormal();
-    const FbxGeometryElementVertexColor* colors = mesh->GetElementVertexColor();
     const FbxGeometryElementUV* uvs = mesh->GetElementUV();
 
     unsigned int index_counter = 0;
 
     std::ofstream out(output_path, std::ios::binary);
-    if (!out.is_open())
+    if (out.is_open() == false)
     {
         THROW_IF_FAILED(E_FAIL);
         return;
@@ -119,12 +116,14 @@ void LoadManager::ExtractMesh(const std::string& output_path, FbxMesh* mesh)
 
     for (int polygon_index = 0; polygon_index < mesh->GetPolygonCount(); ++polygon_index)
     {
-        unsigned int polygon_size = mesh->GetPolygonSize(polygon_index);
+        int polygon_size = mesh->GetPolygonSize(polygon_index);
         for (unsigned int vertex_index = 0; vertex_index < polygon_size; ++vertex_index)
         {
             FbxVector4 position;
-            unsigned int control_point_index = mesh->GetPolygonVertex(polygon_index, vertex_index);
-            position = control_points[control_point_index]; 
+            int control_point_index = mesh->GetPolygonVertex(polygon_index, vertex_index);
+            position = control_points[control_point_index];
+            char tag = 'p';
+            out.write(&tag, sizeof(char));
             float out_position[3] = { static_cast<float>(position[0]), static_cast<float>(position[1]), static_cast<float>(position[2]) };
             out.write(reinterpret_cast<char*>(out_position), sizeof(out_position));
     
@@ -141,6 +140,8 @@ void LoadManager::ExtractMesh(const std::string& output_path, FbxMesh* mesh)
                 {
                     normal = normals->GetDirectArray().GetAt(normals->GetIndexArray().GetAt(by_polygon_vertex_index));
                 }
+                tag = 'n';
+                out.write(&tag, sizeof(char));
                 float out_normal[3] = { static_cast<float>(normal[0]), static_cast<float>(normal[1]), static_cast<float>(normal[2]) };
                 out.write(reinterpret_cast<char*>(out_normal), sizeof(out_normal));
             }
@@ -156,6 +157,8 @@ void LoadManager::ExtractMesh(const std::string& output_path, FbxMesh* mesh)
                 {
                     tangent = tangents->GetDirectArray().GetAt(tangents->GetIndexArray().GetAt(by_polygon_vertex_index));
                 }
+                tag = 't';
+                out.write(&tag, sizeof(char));
                 float out_tangent[3] = { static_cast<float>(tangent[0]), static_cast<float>(tangent[1]), static_cast<float>(tangent[2]) };
                 out.write(reinterpret_cast<char*>(out_tangent), sizeof(out_tangent));
             }
@@ -171,6 +174,8 @@ void LoadManager::ExtractMesh(const std::string& output_path, FbxMesh* mesh)
                 {
                     binormal = binormals->GetDirectArray().GetAt(binormals->GetIndexArray().GetAt(by_polygon_vertex_index));
                 }
+                tag = 'b';
+                out.write(&tag, sizeof(char));
                 float out_binormal[3] = { static_cast<float>(binormal[0]), static_cast<float>(binormal[1]), static_cast<float>(binormal[2]) };
                 out.write(reinterpret_cast<char*>(out_binormal), sizeof(out_binormal));
             }
@@ -185,25 +190,14 @@ void LoadManager::ExtractMesh(const std::string& output_path, FbxMesh* mesh)
                 {
                     uv = FbxVector2(0.0, 0.0);
                 }
-                float out_uv[2] = { static_cast<float>(uv[0]), static_cast<float>(uv[1]) };
-                out.write(reinterpret_cast<char*>(out_uv), sizeof(out_uv));
+                tag = 'u';
+                out.write(&tag, sizeof(char));
+                float out_texture[2] = { static_cast<float>(uv[0]), static_cast<float>(uv[1]) };
+                out.write(reinterpret_cast<char*>(out_texture), sizeof(out_texture));
             }
     
-            if (colors)
-            {
-                FbxColor color;
-                if (colors->GetReferenceMode() == FbxGeometryElement::eDirect)
-                {
-                    color = colors->GetDirectArray().GetAt(by_polygon_vertex_index);
-                }
-                else if (colors->GetReferenceMode() == FbxGeometryElement::eIndexToDirect)
-                {
-                    color = colors->GetDirectArray().GetAt(colors->GetIndexArray().GetAt(by_polygon_vertex_index));
-                }
-                float out_color[3] = { static_cast<float>(color[0]), static_cast<float>(color[1]), static_cast<float>(color[2]) };
-                out.write(reinterpret_cast<char*>(out_color), sizeof(out_color));
-            }
-
+            tag = 'i';
+            out.write(&tag, sizeof(char));
             out.write(reinterpret_cast<char*>(&index_counter), sizeof(unsigned int));
             ++index_counter;
         }

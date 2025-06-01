@@ -21,6 +21,11 @@ std::vector<ID3D12GraphicsCommandList*> FrameResourceManager::GetCurrentFrameRes
 	return frame_resources_[current_frame_index_]->GetAllCommandLists();
 }
 
+ID3D12GraphicsCommandList* FrameResourceManager::GetCurrentFrameResourceMainThreadCommandList() const
+{
+	return frame_resources_[current_frame_index_]->GetMainThreadCommandList();
+}
+
 void FrameResourceManager::SetCurrentFrameResourceFenceValue(const unsigned long long fence_value)
 {
 	frame_resources_[current_frame_index_]->SetFenceValue(fence_value);

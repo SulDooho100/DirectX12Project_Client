@@ -11,6 +11,8 @@
 #include <tchar.h>
 
 #include <iostream>
+#include <fstream>
+#include <filesystem>
 #include <memory>
 #include <string>
 
@@ -30,7 +32,6 @@
 #include <dxgi1_6.h>
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
-#include <directxtk/VertexTypes.h>
 #include <dxgidebug.h>
 
 #include <fbxsdk.h>
