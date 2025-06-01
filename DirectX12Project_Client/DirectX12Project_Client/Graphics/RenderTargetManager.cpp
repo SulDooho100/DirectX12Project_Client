@@ -29,7 +29,7 @@ D3D12_RECT* RenderTargetManager::GetScissorRect() const
 	return scissor_rect_.get();
 }
 
-ID3D12Resource* RenderTargetManager::GetResourceByKey(const std::string& key)
+ID3D12Resource* RenderTargetManager::GetResource(const std::string& key)
 {
 	auto iter = resources_.find(key);
 
@@ -41,7 +41,7 @@ ID3D12Resource* RenderTargetManager::GetResourceByKey(const std::string& key)
 	return resources_[key].Get();
 }
 
-D3D12_CPU_DESCRIPTOR_HANDLE& RenderTargetManager::GetCpuDescriptorHandleByKey(const std::string& key)
+D3D12_CPU_DESCRIPTOR_HANDLE& RenderTargetManager::GetCpuDescriptorHandle(const std::string& key)
 {
 	auto iter = cpu_descriptor_handles_.find(key);
 
@@ -111,8 +111,8 @@ void RenderTargetManager::CreateBackBufferRenderTargetViews(D3D12_CPU_DESCRIPTOR
 		DeviceManager::GetInstance().GetDevice()->CreateRenderTargetView(back_buffer.Get(), nullptr, cpu_descriptor_handle);
 
 		std::string key = "BackBuffer" + std::to_string(i);
-		SetResourceByKey(key, back_buffer);
-		SetCpuDescriptorHandleByKey(key, cpu_descriptor_handle);
+		SetResource(key, back_buffer);
+		SetCpuDescriptorHandle(key, cpu_descriptor_handle);
 
 		cpu_descriptor_handle.ptr += DeviceManager::GetInstance().GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 	}
@@ -155,17 +155,17 @@ void RenderTargetManager::CreateDepthStencilView()
 	DeviceManager::GetInstance().GetDevice()->CreateDepthStencilView(depth_stencil_buffer.Get(), nullptr, cpu_descriptor_handle);
 
 	std::string key = "DepthStencil";
-	SetResourceByKey(key, depth_stencil_buffer);
-	SetCpuDescriptorHandleByKey(key, cpu_descriptor_handle);
+	SetResource(key, depth_stencil_buffer);
+	SetCpuDescriptorHandle(key, cpu_descriptor_handle);
 }
 
-void RenderTargetManager::SetResourceByKey(const std::string& key, const Microsoft::WRL::ComPtr<ID3D12Resource> value)
+void RenderTargetManager::SetResource(const std::string& key, const Microsoft::WRL::ComPtr<ID3D12Resource> resource)
 {
 	auto iter = resources_.find(key);
 
 	if (iter == resources_.end())
 	{
-		resources_[key] = value;
+		resources_[key] = resource;
 
 		return;
 	}
@@ -173,13 +173,13 @@ void RenderTargetManager::SetResourceByKey(const std::string& key, const Microso
 	THROW_IF_FAILED(E_FAIL);
 }
 
-void RenderTargetManager::SetCpuDescriptorHandleByKey(const std::string& key, const D3D12_CPU_DESCRIPTOR_HANDLE value)
+void RenderTargetManager::SetCpuDescriptorHandle(const std::string& key, const D3D12_CPU_DESCRIPTOR_HANDLE handle)
 {
 	auto iter = cpu_descriptor_handles_.find(key);
 
 	if (iter == cpu_descriptor_handles_.end())
 	{
-		cpu_descriptor_handles_[key] = value;
+		cpu_descriptor_handles_[key] = handle;
 
 		return;
 	}

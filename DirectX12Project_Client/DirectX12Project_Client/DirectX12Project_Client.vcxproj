@@ -145,6 +145,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene\FbxSdkManager.h" />
     <ClInclude Include="Scene\Mesh.h" />
+    <ClInclude Include="Scene\MeshManager.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\VertexTypes.h" />
     <ClInclude Include="stdafx.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="MultiThread\ThreadPoolManager.cpp" />
     <ClCompile Include="Scene\FbxSdkManager.cpp" />
     <ClCompile Include="Scene\Mesh.cpp" />
+    <ClCompile Include="Scene\MeshManager.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

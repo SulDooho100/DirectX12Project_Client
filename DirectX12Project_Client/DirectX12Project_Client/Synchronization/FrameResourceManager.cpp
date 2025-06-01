@@ -49,7 +49,7 @@ void FrameResourceManager::ChangeBackBufferPresentToRenderTarget()
 	resource_barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
 	resource_barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
 	std::string key = "BackBuffer" + std::to_string(SwapChainManager::GetInstance().GetCurrentBackBufferIndex());
-	resource_barrier.Transition.pResource = RenderTargetManager::GetInstance().GetResourceByKey(key);
+	resource_barrier.Transition.pResource = RenderTargetManager::GetInstance().GetResource(key);
 	resource_barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
 	resource_barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
 	resource_barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
@@ -60,12 +60,12 @@ void FrameResourceManager::ClearBackBufferRenderTargetView()
 {
 	std::string key = "BackBuffer" + std::to_string(SwapChainManager::GetInstance().GetCurrentBackBufferIndex());
 	float clear_color[4] = { 0.0f, 0.125f, 0.3f, 1.0f };
-	frame_resources_[current_frame_index_]->GetMainThreadCommandList()->ClearRenderTargetView(RenderTargetManager::GetInstance().GetCpuDescriptorHandleByKey(key), clear_color, 0, nullptr);
+	frame_resources_[current_frame_index_]->GetMainThreadCommandList()->ClearRenderTargetView(RenderTargetManager::GetInstance().GetCpuDescriptorHandle(key), clear_color, 0, nullptr);
 }
 
 void FrameResourceManager::ClearDepthStencilView()
 {
-	frame_resources_[current_frame_index_]->GetMainThreadCommandList()->ClearDepthStencilView(RenderTargetManager::GetInstance().GetCpuDescriptorHandleByKey("DepthStencil"), D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, nullptr);
+	frame_resources_[current_frame_index_]->GetMainThreadCommandList()->ClearDepthStencilView(RenderTargetManager::GetInstance().GetCpuDescriptorHandle("DepthStencil"), D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, nullptr);
 }
 
 void FrameResourceManager::SetViewport()
@@ -80,8 +80,8 @@ void FrameResourceManager::SetScissorRect()
 
 void FrameResourceManager::SetRenderTarget()
 {
-	D3D12_CPU_DESCRIPTOR_HANDLE& render_target_descriptor = RenderTargetManager::GetInstance().GetCpuDescriptorHandleByKey("BackBuffer" + std::to_string(SwapChainManager::GetInstance().GetCurrentBackBufferIndex()));
-	D3D12_CPU_DESCRIPTOR_HANDLE& depth_stencil_descriptor = RenderTargetManager::GetInstance().GetCpuDescriptorHandleByKey("DepthStencil");
+	D3D12_CPU_DESCRIPTOR_HANDLE& render_target_descriptor = RenderTargetManager::GetInstance().GetCpuDescriptorHandle("BackBuffer" + std::to_string(SwapChainManager::GetInstance().GetCurrentBackBufferIndex()));
+	D3D12_CPU_DESCRIPTOR_HANDLE& depth_stencil_descriptor = RenderTargetManager::GetInstance().GetCpuDescriptorHandle("DepthStencil");
 	frame_resources_[current_frame_index_]->GetMainThreadCommandList()->OMSetRenderTargets(1, &render_target_descriptor, true, &depth_stencil_descriptor);
 }
 
@@ -92,7 +92,7 @@ void FrameResourceManager::ChangeBackBufferRenderTargetToPresent()
 	resource_barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
 	resource_barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
 	std::string key = "BackBuffer" + std::to_string(SwapChainManager::GetInstance().GetCurrentBackBufferIndex());
-	resource_barrier.Transition.pResource = RenderTargetManager::GetInstance().GetResourceByKey(key); 
+	resource_barrier.Transition.pResource = RenderTargetManager::GetInstance().GetResource(key); 
 	resource_barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
 	resource_barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
 	resource_barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;

@@ -19,7 +19,7 @@ void FbxSdkManager::Initialize()
 {
     CreateFbxSdkObjects();
 
-    std::string folder_path = "GameAssets";
+    const std::string folder_path = "GameAssets";
     for (const auto& entry : std::filesystem::recursive_directory_iterator(folder_path))
     {
         if (entry.is_regular_file() && entry.path().extension() == ".fbx")

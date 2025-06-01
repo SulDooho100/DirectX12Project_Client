@@ -18,8 +18,8 @@ public:
     void Initialize();
     D3D12_VIEWPORT* GetViewport() const;
     D3D12_RECT* GetScissorRect() const;
-    ID3D12Resource* GetResourceByKey(const std::string& key);
-    D3D12_CPU_DESCRIPTOR_HANDLE& GetCpuDescriptorHandleByKey(const std::string& key);
+    ID3D12Resource* GetResource(const std::string& key);
+    D3D12_CPU_DESCRIPTOR_HANDLE& GetCpuDescriptorHandle(const std::string& key);
 
 private:
     void CreateViewPort();
@@ -31,8 +31,8 @@ private:
 
     void CreateBackBufferRenderTargetViews(D3D12_CPU_DESCRIPTOR_HANDLE& cpu_descriptor_handle);
 
-    void SetResourceByKey(const std::string& key, const Microsoft::WRL::ComPtr<ID3D12Resource> value);
-    void SetCpuDescriptorHandleByKey(const std::string& key, const D3D12_CPU_DESCRIPTOR_HANDLE value);
+    void SetResource(const std::string& key, const Microsoft::WRL::ComPtr<ID3D12Resource> resource);
+    void SetCpuDescriptorHandle(const std::string& key, const D3D12_CPU_DESCRIPTOR_HANDLE handle);
 
 private:
     std::unique_ptr<D3D12_VIEWPORT> viewport_;
