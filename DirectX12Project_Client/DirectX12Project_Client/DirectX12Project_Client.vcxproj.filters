@@ -55,6 +55,21 @@
     <Filter Include="헤더 파일\MultiThread">
       <UniqueIdentifier>{f8b6e762-93d0-4e3b-931e-eee496341de9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Shaders">
+      <UniqueIdentifier>{7fd10db0-f41e-4bd0-b566-66ffd217ad87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Shaders">
+      <UniqueIdentifier>{69756549-3f72-4be8-8663-7cd0ca13483c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL">
+      <UniqueIdentifier>{d69c136b-4043-4155-8567-17a1b2bc4b9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL\Cube">
+      <UniqueIdentifier>{b0d46e81-da4a-4d3b-8528-f80bab38bed8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL\Header">
+      <UniqueIdentifier>{73b8b03b-5e34-4bb6-b8a1-4592298abfd2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -105,11 +120,17 @@
     <ClInclude Include="Scene\VertexTypes.h">
       <Filter>헤더 파일\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\FbxSdkManager.h">
-      <Filter>소스 파일\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Scene\MeshManager.h">
       <Filter>헤더 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\PipelineStateManager.h">
+      <Filter>헤더 파일\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\FbxSdkManager.h">
+      <Filter>헤더 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\ShaderManager.h">
+      <Filter>헤더 파일\Shaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -162,11 +183,33 @@
     <ClCompile Include="Scene\Mesh.cpp">
       <Filter>소스 파일\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\FbxSdkManager.cpp">
-      <Filter>헤더 파일\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Scene\MeshManager.cpp">
       <Filter>소스 파일\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Shaders\PipelineStateManager.cpp">
+      <Filter>소스 파일\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\FbxSdkManager.cpp">
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders\ShaderManager.cpp">
+      <Filter>소스 파일\Shaders</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="HLSL\Header\ConstantBuffers.hlsli">
+      <Filter>HLSL\Header</Filter>
+    </None>
+    <None Include="HLSL\Header\VertexTypes.hlsli">
+      <Filter>HLSL\Header</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="HLSL\Cube\Cube_PixelShader.hlsl">
+      <Filter>HLSL\Cube</Filter>
+    </FxCompile>
+    <FxCompile Include="HLSL\Cube\Cube_VertexShader.hlsl">
+      <Filter>HLSL\Cube</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

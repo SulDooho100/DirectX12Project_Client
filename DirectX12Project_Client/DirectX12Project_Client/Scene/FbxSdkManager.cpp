@@ -117,7 +117,7 @@ void FbxSdkManager::ExtractMesh(const std::string& output_path, FbxMesh* mesh)
     for (int polygon_index = 0; polygon_index < mesh->GetPolygonCount(); ++polygon_index)
     {
         int polygon_size = mesh->GetPolygonSize(polygon_index);
-        for (unsigned int vertex_index = 0; vertex_index < polygon_size; ++vertex_index)
+        for (int vertex_index = 0; vertex_index < polygon_size; ++vertex_index)
         {
             FbxVector4 position;
             int control_point_index = mesh->GetPolygonVertex(polygon_index, vertex_index);

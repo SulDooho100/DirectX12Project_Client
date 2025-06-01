@@ -10,6 +10,8 @@
 #include "Synchronization/FenceManager.h"
 #include "Synchronization/FrameResourceManager.h"
 #include "MultiThread/ThreadPoolManager.h"
+#include "Shaders/ShaderManager.h"
+#include "Shaders/PipelineStateManager.h"
 #include "Scene/FbxSdkManager.h"
 #include "Scene/MeshManager.h"
 #include "Scene/SceneManager.h"
@@ -112,6 +114,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
        FenceManager::GetInstance().Initialize();
        FrameResourceManager::GetInstance().Initialize();
        ThreadPoolManager::GetInstance().Initialize();
+       ShaderManager::GetInstance().Initialize();
        FbxSdkManager::GetInstance().Initialize();
        MeshManager::GetInstance().Initialize();
        SceneManager::GetInstance().Initialize();
