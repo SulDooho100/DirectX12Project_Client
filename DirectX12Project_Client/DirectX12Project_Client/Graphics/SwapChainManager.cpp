@@ -131,14 +131,14 @@ void SwapChainManager::CreateSwapChain(HWND hwnd)
 	if (output_)
 	{
 		THROW_IF_FAILED(DeviceManager::GetInstance().GetFactory()->CreateSwapChainForHwnd(QueueManager::GetInstance().GetQueue(), hwnd, &swap_chain_desc, &swap_chain_fullscreen_desc, nullptr, swap_chain1.GetAddressOf()));
+		THROW_IF_FAILED(swap_chain1.As(&swap_chain_));
 		THROW_IF_FAILED(swap_chain_->SetFullscreenState(true, nullptr));
 	}
 	else
 	{
 		THROW_IF_FAILED(DeviceManager::GetInstance().GetFactory()->CreateSwapChainForHwnd(QueueManager::GetInstance().GetQueue(), hwnd, &swap_chain_desc, nullptr, nullptr, swap_chain1.GetAddressOf()));
+		THROW_IF_FAILED(swap_chain1.As(&swap_chain_));
 	}
-
-	THROW_IF_FAILED(swap_chain1.As(&swap_chain_));
 }
 
 void SwapChainManager::SetFullscreen(HWND hwnd)
