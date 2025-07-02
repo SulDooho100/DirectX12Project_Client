@@ -26,7 +26,7 @@ public:
 
 private:
     void CreateOutput(HWND hwnd);
-    void GetBestRateAndResolution();
+    void GetBestRateAndFHDResolution();
     void CreateSwapChain(HWND hwnd);
     void SetFullscreen(HWND hwnd);
 

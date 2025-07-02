@@ -12,7 +12,7 @@ SwapChainManager& SwapChainManager::GetInstance()
 void SwapChainManager::Initialize(HWND hwnd)
 {
 	CreateOutput(hwnd);
-	GetBestRateAndResolution();
+	GetBestRateAndFHDResolution();
 	CreateSwapChain(hwnd);
 	SetFullscreen(hwnd);
 }
@@ -68,8 +68,10 @@ void SwapChainManager::CreateOutput(HWND hwnd)
 	}
 }
 
-void SwapChainManager::GetBestRateAndResolution()
+void SwapChainManager::GetBestRateAndFHDResolution()
 {
+	const unsigned int kFhdWidth = 1920;
+	const unsigned int kFhdHeight = 1080;
 	output_mode_desc_ = std::make_unique<DXGI_MODE_DESC>();
 	::ZeroMemory(output_mode_desc_.get(), sizeof(DXGI_MODE_DESC));
 	output_mode_desc_->RefreshRate.Denominator = 30;
@@ -95,7 +97,7 @@ void SwapChainManager::GetBestRateAndResolution()
 				float current_rate = static_cast<float>(mode.RefreshRate.Numerator) / static_cast<float>(mode.RefreshRate.Denominator);
 				float best_rate = static_cast<float>(output_mode_desc_->RefreshRate.Numerator) / static_cast<float>(output_mode_desc_->RefreshRate.Denominator);
 				 
-				if (best_rate <= current_rate && output_mode_desc_->Width * output_mode_desc_->Height <= mode.Width * mode.Height)
+				if (best_rate <= current_rate && mode.Width == kFhdWidth && mode.Height == kFhdHeight)
 				{
 					*output_mode_desc_ = mode;
 				}
